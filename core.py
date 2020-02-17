@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 import mimetypes
 import lxml
+from os.path import exists
 
 def requestSoup(url, parser="lxml"):
     html = requests.get(url)
@@ -29,7 +30,8 @@ def saveasfile(directory, name, query):
     ext = mimetypes.guess_extension(content_type)
     if ext is None:
         ext = "smi"
-    saveBinaryFile(session.content, directory, name, ext)
+    if not exists("%s/%s.%s" % (directory, name, ext)):
+        saveBinaryFile(session.content, directory, name, ext)
 
 
 def main():
