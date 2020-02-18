@@ -33,9 +33,10 @@ def searchSub(keyword):
             return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
         else:
             print("no, it's incorrect.")
-            return NameError
+            raise NameError
     except:
         print("subtitle not found!\n")
+        return None
 
 
 def saveasfile(directory, name, query):
@@ -60,7 +61,8 @@ def main():
     
     query = searchSub(args.keyword)
 
-    saveasfile(args.dst_dir, args.keyword, query)
+    if query:
+        saveasfile(args.dst_dir, args.keyword, query)
 
 
 
