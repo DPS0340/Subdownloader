@@ -3,8 +3,12 @@ from os import system, listdir
 from os.path import dirname, basename, exists, isdir, abspath, normpath
 from settings import PYTHON_COMMAND
 import re
+import core
+
+notFoundSubs = []
 
 def search(paths):
+    global notFoundSubs
     for fp in paths:
         fp = abspath(fp)
         print('found {0}'.format(basename(fp)))
@@ -21,16 +25,20 @@ def search(paths):
             print("subtitle already exists!\n\n")
             continue
         print("\n\n", end="")
-        command = '%s %s/core.py --keyword=\"%s\" --dst_dir=\"%s\"' % (PYTHON_COMMAND, sys.path[0], filename, parent)
-        # print(command)
-        system(command)
+        res = core.run(filename, parent)
+        if res is False:
+            notFoundSubs.append(filename)
 
 def main():
-    # print(sys.argv[1:])
+    global notFoundSubs
 
     file_paths = sys.argv[1:]
     print(file_paths)
     search(file_paths)
+
+    if notFoundSubs:
+        print("not found subtitles:")
+        print(notFoundSubs)
 
 
 if __name__ == "__main__":

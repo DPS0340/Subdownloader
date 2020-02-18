@@ -49,20 +49,18 @@ def saveasfile(directory, name, query):
         saveBinaryFile(session.content, directory, name, ext)
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--keyword", help="the name of keyword")
-    parser.add_argument("--dst_dir", help="destination directory")
-    args = parser.parse_args()
-
-    if not (args.keyword and args.dst_dir):
+def run(keyword, dst_dir):
+    if not (keyword and dst_dir):
         print("invalid arguments")
         return
     
-    query = searchSub(args.keyword)
+    query = searchSub(keyword)
 
     if query:
-        saveasfile(args.dst_dir, args.keyword, query)
+        saveasfile(dst_dir, keyword, query)
+        return True
+    else:
+        return False
 
 
 
