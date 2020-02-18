@@ -18,10 +18,16 @@ def saveBinaryFile(blob, dest, name, ext):
 
 def searchSub(keyword):
     soup = requestSoup("https://www.gomlab.com/subtitle/?preface=kr&keyword=%s" % keyword)
-    table = soup.find("tbody")
-    subject = table.find("td", class_="subject")
-    link = subject.find("a")["href"]
-    return re.compile("\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
+    try:
+        table = soup.find("tbody")
+        subject = table.find("td", class_="subject")
+        a = subject.find("a")
+        link = a["href"]
+        name = a.text.strip()
+        print("found subtitle!\n\n{0}\nis that correct?")
+        return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
+    except:
+        print("subtitle not found!")
 
 
 def saveasfile(directory, name, query):
