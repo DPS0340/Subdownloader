@@ -1,6 +1,7 @@
 import sys
 from os import system, listdir
 from os.path import dirname, basename, exists, isdir, abspath, normpath
+from settings import PYTHON_COMMAND
 import re
 
 def search(paths):
@@ -15,7 +16,7 @@ def search(paths):
         filename = basename(fp)[0:-(len(fp.split(".")[-1])+1)]
         if exists(parent+"\\"+filename+".smi") or exists(parent+"\\"+filename+".srt"):
             continue
-        command = 'python %s\\core.py --keyword=\"%s\" --dst_dir=\"%s\"' % (sys.path[0], filename, parent)
+        command = '{PYTHON_COMMAND} %s\\core.py --keyword=\"%s\" --dst_dir=\"%s\"' % (sys.path[0], filename, parent)
         system(command)
 
 def main():
