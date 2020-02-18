@@ -43,7 +43,7 @@ def searchSub(keyword, recursive=False):
             #     print("try another search method...")
             #     return searchSub(sliced, recursive=True)
             raise NameError
-    except Exception, err:
+    except Exception as err:
         print(err)
         print("subtitle not found!\n")
         return None
