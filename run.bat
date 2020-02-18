@@ -6,7 +6,8 @@ SET mypath=%~dp0
 SET line=python3 %mypath:~0,-1%\src\wrapper.py
 
 for %%x in (%*) do (
-    SET line=!line! "\%%x" 
+    SET line=!line! "\%%x"
+    echo !%%x!
  )
 
 echo %line%

@@ -22,9 +22,9 @@ def search(paths):
 
 def main():
     print(sys.argv[1:])
-    line = "".join(sys.argv[1:]).replace("\\", "/")
+    line = " ".join(sys.argv[1:]).replace("\\", "/")
 
-    file_paths = [e.replace('"', '') for e in re.findall('".*?"', line)]
+    file_paths = [re.sub('''["']''', "", e) for e in re.findall(r'''["'].*?["']''', line)]
     print(file_paths)
     search(file_paths)
 
