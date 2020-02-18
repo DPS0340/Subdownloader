@@ -25,7 +25,7 @@ def searchSub(keyword, recursive=False):
         a = subject.find("a")
         link = a["href"]
         name = a.text.strip()
-        huddle = 0.7
+        huddle = 0.60
         if recursive:
             huddle = 0.5
         print("found subtitle!\n\n{0}\n\nis that correct?\n".format(name))
