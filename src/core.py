@@ -27,6 +27,7 @@ def searchSub(keyword, recursive=False):
         name = a.text.strip()
         huddle = 0.5
         keyword = re.match(r"(.+?)(\d+?p)", keyword).group(0)
+        print("using parsed keyword: {0}".format(keyword))
         # if recursive:
         #     huddle = 0.5
         print("found subtitle!\n\n{0}\n\nis that correct?\n".format(name))
@@ -37,10 +38,10 @@ def searchSub(keyword, recursive=False):
             return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
         else:
             print("no, it's incorrect.")
-            if recursive is False:
-                sliced = re.match(r".*?S\d.*?E\d.*?[^\D]", keyword).group(0)
-                print("try another search method...")
-                return searchSub(sliced, recursive=True)
+            # if recursive is False:
+            #     sliced = re.match(r".*?S\d.*?E\d.*?[^\D]", keyword).group(0)
+            #     print("try another search method...")
+            #     return searchSub(sliced, recursive=True)
             raise NameError
     except:
         print("subtitle not found!\n")
