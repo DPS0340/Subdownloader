@@ -25,10 +25,13 @@ def searchSub(keyword, recursive=False):
         a = subject.find("a")
         link = a["href"]
         name = a.text.strip()
+        huddle = 0.7
+        if recursive:
+            huddle = 0.5
         print("found subtitle!\n\n{0}\n\nis that correct?\n".format(name))
         similarity = SequenceMatcher(a=keyword, b=name).ratio()
         print("\nsimilarity: %d\n" % int(similarity*100))
-        if similarity >= 0.7:
+        if similarity >= huddle:
             print("i thinks that's correct!")
             return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
         else:
@@ -36,7 +39,7 @@ def searchSub(keyword, recursive=False):
             if recursive is False:
                 sliced = re.match(r".*?S\d.*?E\d.*?[^\D]", keyword).group(0)
                 print("try another search method...")
-                return searchSub(sliced)
+                return searchSub(sliced, recursive=True)
             raise NameError
     except:
         print("subtitle not found!\n")
