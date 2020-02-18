@@ -9,6 +9,8 @@ for %%x in (%*) do (
     SET line=!line! "\%%x" 
  )
 
+echo %line%
+
 %line%
 
 pause

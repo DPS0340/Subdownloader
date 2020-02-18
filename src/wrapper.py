@@ -8,21 +8,21 @@ def search(paths):
     for fp in paths:
         fp = abspath(fp)
         if isdir(fp):
-            search([abspath(fp+"\\"+e) for e in listdir(fp)])
+            search([abspath(fp+"/"+e) for e in listdir(fp)])
             continue
         if fp.split(".")[-1] not in ["mp4", "avi", "mkv"]:
             continue
         parent = dirname(fp)
         filename = basename(fp)[0:-(len(fp.split(".")[-1])+1)]
-        if exists(parent+"\\"+filename+".smi") or exists(parent+"\\"+filename+".srt"):
+        if exists(parent+"/"+filename+".smi") or exists(parent+"/"+filename+".srt"):
             continue
-        command = '{PYTHON_COMMAND} %s\\core.py --keyword=\"%s\" --dst_dir=\"%s\"' % (sys.path[0], filename, parent)
+        command = '{PYTHON_COMMAND} %s/core.py --keyword=\"%s\" --dst_dir=\"%s\"' % (sys.path[0], filename, parent)
         system(command)
 
 def main():
-    line = "".join(sys.argv[1:])
+    line = "".join(sys.argv[1:]).replace("\\", "/")
 
-    file_paths = re.findall(".:\\\\.*", line)
+    file_paths = re.findall(".:/.*", line)
     print(file_paths)
     search(file_paths)
 
