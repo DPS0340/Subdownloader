@@ -5,8 +5,9 @@ import re
 import mimetypes
 import lxml
 from os.path import exists
+from settings import PARSER
 
-def requestSoup(url, parser="lxml"):
+def requestSoup(url, parser=PARSER):
     html = requests.get(url)
     return BeautifulSoup(html.text, parser)
 
@@ -24,7 +25,7 @@ def searchSub(keyword):
         a = subject.find("a")
         link = a["href"]
         name = a.text.strip()
-        print("found subtitle!\n\n{0}\nis that correct?\n".format(name))
+        print("found subtitle!\n\n{0}\n\nis that correct?\n".format(name))
         return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
     except:
         print("subtitle not found!\n")
