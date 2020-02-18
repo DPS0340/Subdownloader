@@ -26,7 +26,7 @@ def searchSub(keyword, recursive=False):
         link = a["href"]
         name = a.text.strip()
         huddle = 0.5
-        keyword = re.match(r"(.+?)(\d+?p)", keyword).group(1)
+        keyword = re.match(r"(.+?)[. ]*?(\d+p)", keyword).group(1)
         print("using parsed keyword: {0}".format(keyword))
         # if recursive:
         #     huddle = 0.5
