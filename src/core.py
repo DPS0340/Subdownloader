@@ -24,10 +24,10 @@ def searchSub(keyword):
         a = subject.find("a")
         link = a["href"]
         name = a.text.strip()
-        print("found subtitle!\n\n{0}\nis that correct?")
+        print("found subtitle!\n\n{0}\nis that correct?\n".format(name))
         return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
     except:
-        print("subtitle not found!")
+        print("subtitle not found!\n")
 
 
 def saveasfile(directory, name, query):
