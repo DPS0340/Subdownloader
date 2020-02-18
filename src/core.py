@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import mimetypes
-from os.path import exists
+from os.path import exists, normpath
 from settings import PARSER
 from difflib import SequenceMatcher
 
@@ -12,7 +12,7 @@ def requestSoup(url, parser=PARSER):
     return BeautifulSoup(html.text, parser)
 
 def saveBinaryFile(blob, dest, name, ext):
-    with open('"%s/%s.%s"' % (dest, name, ext), 'wb+') as w:
+    with open(normpath('%s/%s.%s') % (dest, name, ext), 'wb+') as w:
         w.write(blob)
     print('downloading file...\n"%s/%s.%s"' % (dest, name, ext))
 
