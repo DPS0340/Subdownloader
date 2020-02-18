@@ -5,6 +5,7 @@ import re
 import mimetypes
 from os.path import exists
 from settings import PARSER
+from difflib import SequenceMatcher
 
 def requestSoup(url, parser=PARSER):
     html = requests.get(url)
@@ -13,7 +14,7 @@ def requestSoup(url, parser=PARSER):
 def saveBinaryFile(blob, dest, name, ext):
     with open('"%s/%s.%s"' % (dest, name, ext), 'wb+') as w:
         w.write(blob)
-    print('"%s/%s.%s"' % (dest, name, ext))
+    print('downloading file...\n"%s/%s.%s"' % (dest, name, ext))
 
 
 def searchSub(keyword):
@@ -25,7 +26,13 @@ def searchSub(keyword):
         link = a["href"]
         name = a.text.strip()
         print("found subtitle!\n\n{0}\n\nis that correct?\n".format(name))
-        return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
+        similarity = SequenceMatcher(a=keyword, b=name).ratio()
+        if similarity >= 0.5:
+            print("i thinks that's correct!")
+            return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
+        else:
+            print("no, it's incorrect.")
+            return NameError
     except:
         print("subtitle not found!\n")
 
