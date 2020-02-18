@@ -17,7 +17,7 @@ def saveBinaryFile(blob, dest, name, ext):
     print('downloading file...\n"%s/%s.%s"' % (dest, name, ext))
 
 
-def searchSub(keyword):
+def searchSub(keyword, recursive=False):
     soup = requestSoup("https://www.gomlab.com/subtitle/?preface=kr&keyword=%s" % keyword)
     try:
         table = soup.find("tbody")
@@ -33,6 +33,10 @@ def searchSub(keyword):
             return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
         else:
             print("no, it's incorrect.")
+            if recursive is False:
+                sliced = re.match(r".*?S\d.*?E\d.*?[^\D]", keyword).group(0)
+                print("try another search method...")
+                return searchSub(sliced)
             raise NameError
     except:
         print("subtitle not found!\n")
