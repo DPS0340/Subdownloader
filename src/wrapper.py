@@ -16,7 +16,8 @@ def search(paths):
         filename = basename(fp)[0:-(len(fp.split(".")[-1])+1)]
         if exists(parent+"/"+filename+".smi") or exists(parent+"/"+filename+".srt"):
             continue
-        command = '{PYTHON_COMMAND} %s/core.py --keyword=\"%s\" --dst_dir=\"%s\"' % (sys.path[0], filename, parent)
+        command = '%s %s/core.py --keyword=\"%s\" --dst_dir=\"%s\"' % (PYTHON_COMMAND, sys.path[0], filename, parent)
+        print(command)
         system(command)
 
 def main():
