@@ -37,8 +37,9 @@ def main():
     search(file_paths)
 
     if notFoundSubs:
-        print("not found subtitles:")
-        print(notFoundSubs)
+        print("not found subtitles to notfound.txt")
+        with open(basename(normpath(__file__)), "w+") as w:
+            w.write("\n".join(notFoundSubs))
 
 
 if __name__ == "__main__":
