@@ -3,7 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import mimetypes
-import lxml
 from os.path import exists
 from settings import PARSER
 
