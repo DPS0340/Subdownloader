@@ -21,9 +21,10 @@ def search(paths):
         system(command)
 
 def main():
+    print(sys.argv[1:])
     line = "".join(sys.argv[1:]).replace("\\", "/")
 
-    file_paths = re.findall(".:/.*", line)
+    file_paths = [e.replace('"', '') for e in re.findall('".*?"', line)]
     print(file_paths)
     search(file_paths)
 
