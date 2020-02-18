@@ -25,7 +25,7 @@ def searchSub(keyword, recursive=False):
         a = subject.find("a")
         link = a["href"]
         name = a.text.strip()
-        huddle = 0.5
+        huddle = 0.62
         try:
             temp = re.match(r"(.+?)[. ]*?(\d+p)", keyword).group(1)
             if temp:
