@@ -43,7 +43,7 @@ def searchSub(keyword, recursive=False):
         similarity = SequenceMatcher(a=keyword, b=name).ratio()
         print("\nsimilarity: %d\n" % int(similarity*100))
         if similarity >= huddle:
-            print("i thinks that's correct!")
+            print("i think that's correct!")
             return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
         else:
             print("no, it's incorrect.")
