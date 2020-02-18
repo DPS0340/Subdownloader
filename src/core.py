@@ -12,9 +12,9 @@ def requestSoup(url, parser=PARSER):
     return BeautifulSoup(html.text, parser)
 
 def saveBinaryFile(blob, dest, name, ext):
-    with open("%s/%s.%s" % (dest, name, ext), 'wb') as w:
+    with open('"%s/%s.%s"' % (dest, name, ext), 'wb') as w:
         w.write(blob)
-    print("%s/%s.%s" % (dest, name, ext))
+    print('"%s/%s.%s"' % (dest, name, ext))
 
 
 def searchSub(keyword):
