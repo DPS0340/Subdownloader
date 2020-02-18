@@ -20,8 +20,15 @@ def saveBinaryFile(blob, dest, name, ext):
 def perfomGoogleSearch(keyword):
     print(keyword)
     try:
-        answer = list(google("{0} site:cineaste.co.kr".format(keyword), lang="ko", stop=1))[0]
-    except:
+        print("{0} site:cineaste.co.kr".format(keyword))
+        l = google("{0} site:cineaste.co.kr".format(keyword), lang="ko", stop=10)
+        answer = ""
+        for e in l:
+            if "caption" in e:
+                answer = e
+                break
+    except Exception as err:
+        print(err)
         return None
     print(answer)
     if "cineaste.co.kr" not in answer:
@@ -29,7 +36,11 @@ def perfomGoogleSearch(keyword):
     return answer
 
 
-def searchSub(keyword):
+def searchSub(keyword, charToBeReplaced=" "):
+    if charToBeReplaced == " ":
+        keyword = keyword.replace(" ", ".")
+    elif charToBeReplaced == ".":
+        keyword = keyword.replace(".", " ")
     url = perfomGoogleSearch(keyword)
     if url is None:
         print("subtitle not found!\n")
@@ -59,6 +70,9 @@ def searchSub(keyword):
     except Exception as err:
         print(err)
         print("subtitle not found!\n")
+        if charToBeReplaced == " ":
+            print("using another search method...")
+            return searchSub(keyword, charToBeReplaced=" ")
         return None, None
 
 
