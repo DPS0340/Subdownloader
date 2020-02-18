@@ -27,6 +27,7 @@ def searchSub(keyword):
         name = a.text.strip()
         print("found subtitle!\n\n{0}\n\nis that correct?\n".format(name))
         similarity = SequenceMatcher(a=keyword, b=name).ratio()
+        print("\nsimilarity: %.0f\n" % similarity*100)
         if similarity >= 0.5:
             print("i thinks that's correct!")
             return re.compile(r"\D*?\d*?&").match(link).group(0).replace("view.gom", "download.gom")
