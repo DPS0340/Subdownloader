@@ -25,9 +25,10 @@ def searchSub(keyword, recursive=False):
         a = subject.find("a")
         link = a["href"]
         name = a.text.strip()
-        huddle = 0.60
-        if recursive:
-            huddle = 0.5
+        huddle = 0.5
+        keyword = re.match(r"(.+?)(\d+?p)", keyword).group(0)
+        # if recursive:
+        #     huddle = 0.5
         print("found subtitle!\n\n{0}\n\nis that correct?\n".format(name))
         similarity = SequenceMatcher(a=keyword, b=name).ratio()
         print("\nsimilarity: %d\n" % int(similarity*100))
