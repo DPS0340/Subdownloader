@@ -12,7 +12,7 @@ import time
 import urllib.parse
 
 gomlab = requests.Session()
-gomlab.mount("https://www.gomlab.com/", HTTP20Adapter())
+gomlab.mount("https://www.gomlab.com/")
 
 reflat = requests.Session()
 reflat.mount("https://reflat.net/", HTTP20Adapter())
