@@ -112,7 +112,15 @@ def searchSub(keyword, conn, format):
 
 def searchReflat(keyword):
     print(keyword)
-    keyword = re.search(movieparse, keyword).group(0)
+    regex = re.search(movieparse, keyword)
+    if regex.group(1) is not None:
+        keyword = regex.group(1)
+    elif regex.group(2) is not None and regex.group(3) is not None:
+        keyword = regex.group(2) + " " + regex.group(3)
+    elif regex.group(4) is not None:
+        keyword = regex.group(4)
+    else:
+        pass
     print(keyword)
     return searchSub(keyword, reflat, reflatSearchFormat)
 
