@@ -1,7 +1,6 @@
 import sys
 from os import listdir
 from os.path import dirname, basename, exists, isdir, abspath, normpath
-from settings import PYTHON_COMMAND
 import re
 import core
 
