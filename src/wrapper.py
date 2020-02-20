@@ -9,7 +9,6 @@ notFoundSubs = []
 def search(paths):
     global notFoundSubs
     for fp in paths:
-        fp = abspath(fp)
         print('found {0}'.format(basename(fp)))
         if isdir(fp):
             print("it's directory, doing recursive search\n\n")
