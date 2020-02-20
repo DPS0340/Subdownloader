@@ -29,11 +29,13 @@ def searchSub(keyword, recursive=False):
             temp = re.match(r"(.+?)[. ]*?(\d+p)", keyword).group(1)
             if temp:
                 keyword = temp
+                name = re.match(r"(.+?)[. ]*?(\d+p)", name).group(1)
         except:
             try:
                 temp = re.match(r".*?S\d.*?E\d.*?[^\D]", keyword).group(0)
                 if temp:
                     keyword = temp
+                    name = re.match(r".*?S\d.*?E\d.*?[^\D]", name).group(0)
             except:
                 pass
         print("using parsed keyword: {0}".format(keyword))
