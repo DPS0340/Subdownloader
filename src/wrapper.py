@@ -31,7 +31,7 @@ def search(paths):
 def main():
     global notFoundSubs
 
-    file_paths = sys.argv[1:]
+    file_paths = [abspath(e) for e in sys.argv[1:]]
     print(file_paths)
     search(file_paths)
 
