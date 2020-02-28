@@ -1,10 +1,13 @@
-# 설치 #
+# Subdownloader
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+## 설치
 
 ```cmd
 pip3 install -r requirements.txt
 ```
 
-# 실행 #
+## 실행
 
 run.bat에 폴더나 파일을 드래그 앤 드롭 하세요.
 
