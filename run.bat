@@ -1,6 +1,5 @@
 @echo off
 setlocal EnableDelayedExpansion
-set argCount=0
 
 SET mypath=%~dp0
 SET line=py -3 %mypath:~0,-1%\src\wrapper.py
