@@ -24,11 +24,14 @@ timeout = 10
 
 movieparse = r"(?:(?:^(?:[\[\(][\da-zA-Z\-]*?[\]\)])?[ .]?(.*?(?:\d{4}?))[ .]?(?:(?:\d{3,4}p)|(?:[\[\(].*?\d*?x\d*?.*?[\]\)])|[ .]))|(?:\((.*?) ?,? ?(\d{4})?\))|(.*S\d+E\d+))"
 
+
 def gomlabUrlParse(url):
     return '/subtitle/download.gom?seq={0}'.format(re.compile(r"\D*?(\d+)&").search(url).group(1))
 
+
 def reflatUrlParse(url):
     return '/loadFILES?p_seq={0}'.format(re.compile(r"seq=(\d+)").search(url).group(1))
+
 
 def requestSoup(conn=gomlab, query="/", parser=PARSER):
     try:
@@ -40,10 +43,12 @@ def requestSoup(conn=gomlab, query="/", parser=PARSER):
         traceback.print_tb(err.__traceback__)
         return None
 
+
 def saveBinaryFile(blob, dest, name, ext):
     with open(normpath('%s/%s.%s') % (dest, name, ext), 'wb+') as w:
         w.write(blob)
     print('downloading file...\n"%s/%s.%s"' % (dest, name, ext))
+
 
 def searchSub(keyword, conn, format):
     print("keyword: %s" % keyword)
@@ -74,7 +79,7 @@ def searchSub(keyword, conn, format):
             link = a["href"]
         res = ""
         if conn == gomlab:
-            res = gomlabUrlParse(link)
+            res = "https://www.gomlab.com{0}".format(gomlabUrlParse(link))
         elif conn == reflat:
             res = reflatUrlParse(link)
             soup = requestSoup(conn, "https://reflat.net{0}".format(res))
@@ -83,7 +88,8 @@ def searchSub(keyword, conn, format):
             print(a["title"])
             print(a["data-floc"])
             regex = re.search(movieparse, a["title"])
-            res = "https://sail.reflat.net/api/dwFunc/?l=blog%2Frocketman%2F{0}&f={1}".format(a["data-floc"], a["title"])
+            res = "https://sail.reflat.net/api/dwFunc/?l=blog%2Frocketman%2F{0}&f={1}".format(
+                a["data-floc"], a["title"])
             if regex.group(1) is not None:
                 name = regex.group(1)
             elif regex.group(2) is not None and regex.group(3) is not None:
@@ -124,14 +130,19 @@ def searchReflat(keyword):
     print(keyword)
     return searchSub(keyword, reflat, reflatSearchFormat)
 
+
 def searchGom(keyword):
     return searchSub(keyword, gomlab, gomlabSearchFormat)
 
 
 def saveasfile(directory, name, session):
-    content_type = session.headers['content-type']
-    ext = mimetypes.guess_extension(content_type)
-    if ext != "srt":
+    ext = ""
+    try:
+        content_type = session.headers['content-type']
+        ext = mimetypes.guess_extension(content_type)
+        if ext != "srt":
+            ext = "smi"
+    except KeyError:
         ext = "smi"
     if not exists("%s/%s.%s" % (directory, name, ext)):
         saveBinaryFile(session.content, directory, name, ext)
@@ -141,9 +152,9 @@ def run(keyword, dst_dir):
     if not (keyword and dst_dir):
         print("invalid arguments")
         return
-    
+
     isReflat = True
-    
+
     query = searchReflat(keyword)
 
     if not query:
@@ -153,9 +164,11 @@ def run(keyword, dst_dir):
     if query:
         print(query)
         if isReflat:
-            saveasfile(dst_dir, keyword, reflat.request("GET", query, timeout=timeout))
+            saveasfile(dst_dir, keyword, reflat.request(
+                "GET", query, timeout=timeout))
         else:
-            saveasfile(dst_dir, keyword, gomlab.request("GET", query, timeout=timeout))
+            saveasfile(dst_dir, keyword, gomlab.request(
+                "GET", query, timeout=timeout))
         return True
     else:
         return False
